@@ -2,7 +2,7 @@
 import PyPDF2
 from pdf2image import convert_from_path
 import tkinter as tk
-from tkinter import filedialog, Text
+from tkinter import N, TOP, StringVar, filedialog, Text
 from PIL import ImageTk, Image
 import shutil
 import os
@@ -66,6 +66,7 @@ def prev_button():
 
 def updateUI():
    global currentImage
+   global textImage
    if(currentImage + 1 >= len(images)):
       
       print(currentImage, len(images))
@@ -79,6 +80,11 @@ def updateUI():
    else:
       prevButton.place(x = 25, y = 100)
 
+   imageText.set(str(currentImage) + " of " + str(len(images)))
+   pageText.place(relx=0.5, rely = 0.0, anchor = 'n')
+   
+   
+
 
 
 
@@ -87,7 +93,7 @@ img = ImageTk.PhotoImage(Image.open("random.jpg"))
 panel = tk.Label(win, image  = img)
 
 #The Pack geometry manager packs widgets in rows or columns.
-panel.pack(side = "bottom", fill = "both", expand = "yes", ipadx=10)
+panel.pack(side = "bottom", fill = "both", expand = "yes", ipadx=10, ipady=10)
 def display():
    global currentImage
    global img
@@ -165,5 +171,10 @@ nextButton.place_forget()
 #prev button
 prevButton = tk.Button(win, text = '<', command = prev_button)
 prevButton.place_forget()
+
+#text
+imageText = StringVar()
+pageText = tk.Label(win, width=width, textvariable = imageText)
+pageText.place_forget()
 
 win.mainloop()
